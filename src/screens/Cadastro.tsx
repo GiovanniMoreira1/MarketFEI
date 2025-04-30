@@ -1,33 +1,86 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Cadastro() {
+export default function Cadastro({ onSignup, navigation }: { onSignup: () => void, navigation: any }) {
+
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [user, setUser] = useState('');
+  const [senha, setSenha] = useState('');
+
+  function SalvarDados() {
+
+  }
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>pagina cadastro</Text>
+    <LinearGradient
+      colors={['rgb(255, 255, 255)', 'rgb(200, 200, 200)']}
+      style={styles.container}
+    >
+      {/* Overlay for depth */}
+      <View style={styles.overlay}></View>
 
+      <View style={styles.circuloCima} />
+      <View style={styles.circuloBaixo} />
+    
       <Image 
           source={require('../../assets/logo_azul_nobg.png')}
           style={styles.logo}
           resizeMode="contain"
-            />
+      />
 
       <TextInput style={styles.inputs} placeholder='Nome' placeholderTextColor='#bebebe'></TextInput>
       <TextInput style={styles.inputs} placeholder='E-mail' placeholderTextColor='#bebebe'></TextInput>
       <TextInput style={styles.inputs} placeholder='User' placeholderTextColor='#bebebe'></TextInput>
       <TextInput style={styles.inputs} placeholder='Senha' placeholderTextColor='#bebebe'></TextInput>
       
-      <TouchableOpacity style={styles.botao} onPress={() => {}}>
+      <TouchableOpacity style={styles.botao} onPress={() => { SalvarDados(); navigation.navigate('Login') }}>
           <Text style={styles.botaoTexto}>Cadastre-se</Text>
       </TouchableOpacity>
-      
-    </View>
+
+      <TouchableOpacity style={styles.voltarTexto} onPress={() => { navigation.navigate('Login') }}>
+          <Text style={styles.voltarTexto}>Voltar para login</Text>
+      </TouchableOpacity>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  circuloCima: {
+    position: 'absolute',
+    top: -30,
+    left: 255,
+    width: 300,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: '#005f9915',
   },
+  circuloBaixo: {
+    position: 'absolute',
+    bottom: -40,
+    right: 150,
+    width: 300,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: '#005f9915',
+  },
+
+  container: {
+    flex: 1,
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)', // light overlay for depth
+  },
+
   inputs: {
     backgroundColor: '#FDFEFF',
     width: 250,
@@ -61,5 +114,13 @@ const styles = StyleSheet.create({
     width: 250,
     height: 100, 
     marginBottom: 20 
-  }
+  },
+
+  voltarTexto: {
+    color: '#005f99',
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginTop: 10,
+    textDecorationLine: 'underline',
+  },
 });
