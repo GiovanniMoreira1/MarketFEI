@@ -19,8 +19,8 @@ export default function Login({ onLogin, navigation }: { onLogin: () => void, na
 
       <Text style={styles.titulo}>Bem-vindo</Text>
 
-      <TextInput placeholder='User' style={styles.inputs} placeholderTextColor="#999" />
-      <TextInput placeholder='Senha' style={styles.inputs} placeholderTextColor="#999" secureTextEntry />
+      <TextInput placeholder='User' style={styles.inputs} placeholderTextColor='#bebebe' />
+      <TextInput placeholder='Senha' style={styles.inputs} placeholderTextColor='#bebebe' secureTextEntry />
 
       <TouchableOpacity style={styles.botao} onPress={onLogin}>
         <Text style={styles.botaoTexto}>Login</Text>
