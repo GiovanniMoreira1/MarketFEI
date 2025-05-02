@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -10,7 +10,10 @@ export default function Cadastro({ onSignup, navigation }: { onSignup: () => voi
   const [senha, setSenha] = useState('');
 
   function SalvarDados() {
-
+      console.log('Nome:', nome);
+      console.log('Email:', email);
+      console.log('User:', user);
+      console.log('Senha:', senha);
   }
 
   return (
@@ -30,10 +33,10 @@ export default function Cadastro({ onSignup, navigation }: { onSignup: () => voi
           resizeMode="contain"
       />
 
-      <TextInput style={styles.inputs} placeholder='Nome' placeholderTextColor='#bebebe'></TextInput>
-      <TextInput style={styles.inputs} placeholder='E-mail' placeholderTextColor='#bebebe'></TextInput>
-      <TextInput style={styles.inputs} placeholder='User' placeholderTextColor='#bebebe'></TextInput>
-      <TextInput style={styles.inputs} placeholder='Senha' placeholderTextColor='#bebebe'></TextInput>
+      <TextInput style={styles.inputs} placeholder='Nome' placeholderTextColor='#bebebe' onChangeText={setNome} ></TextInput>
+      <TextInput style={styles.inputs} placeholder='E-mail' placeholderTextColor='#bebebe' onChangeText={setEmail}></TextInput>
+      <TextInput style={styles.inputs} placeholder='User' placeholderTextColor='#bebebe' onChangeText={setUser}></TextInput>
+      <TextInput style={styles.inputs} placeholder='Senha' placeholderTextColor='#bebebe' onChangeText={setSenha} secureTextEntry/>
       
       <TouchableOpacity style={styles.botao} onPress={() => { SalvarDados(); navigation.navigate('Login') }}>
           <Text style={styles.botaoTexto}>Cadastre-se</Text>
