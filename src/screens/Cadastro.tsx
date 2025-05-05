@@ -1,19 +1,43 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Cadastro({ onSignup, navigation }: { onSignup: () => void, navigation: any }) {
 
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [user, setUser] = useState('');
-  const [senha, setSenha] = useState('');
 
-  function SalvarDados() {
-      console.log('Nome:', nome);
-      console.log('Email:', email);
-      console.log('User:', user);
-      console.log('Senha:', senha);
+  const handleSignUp = async() => {
+    const userDados = {
+        nome,
+        email,
+        user,
+        createdAt: new Date().toISOString(),
+    };
+
+    try {
+        const userExistentes = await AsyncStorage.getItem('users');
+        let users = userExistentes ? JSON.parse(userExistentes) : [];
+
+        const userJaCadastrado = users.some(u=> u.email === email || u.user === user);
+        if (userJaCadastrado) {
+            Alert.alert('Erro', 'E-mail ou usuário já cadastrados.');
+            return;
+        }
+
+        users.push(userDados);
+        await AsyncStorage.setItem('users', JSON.stringify(users));
+        await AsyncStorage.setItem('loggedInUser', JSON.stringify(user));
+
+        navigation.navigate('Login');
+        Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
+    } catch (error) {
+        console.error('Erro ao cadastrar usuário:', error);
+        Alert.alert('Erro', 'Não foi possível cadastrar o usuário.');
+    }
   }
 
   return (
@@ -34,11 +58,10 @@ export default function Cadastro({ onSignup, navigation }: { onSignup: () => voi
       />
 
       <TextInput style={styles.inputs} placeholder='Nome' placeholderTextColor='#bebebe' onChangeText={setNome} ></TextInput>
-      <TextInput style={styles.inputs} placeholder='E-mail' placeholderTextColor='#bebebe' onChangeText={setEmail}></TextInput>
       <TextInput style={styles.inputs} placeholder='User' placeholderTextColor='#bebebe' onChangeText={setUser}></TextInput>
-      <TextInput style={styles.inputs} placeholder='Senha' placeholderTextColor='#bebebe' onChangeText={setSenha} secureTextEntry/>
+      <TextInput style={styles.inputs} placeholder='E-mail' placeholderTextColor='#bebebe' onChangeText={setEmail}></TextInput>
       
-      <TouchableOpacity style={styles.botao} onPress={() => { SalvarDados(); navigation.navigate('Login') }}>
+      <TouchableOpacity style={styles.botao} onPress={() => { handleSignUp(); navigation.navigate('Login') }}>
           <Text style={styles.botaoTexto}>Cadastre-se</Text>
       </TouchableOpacity>
 

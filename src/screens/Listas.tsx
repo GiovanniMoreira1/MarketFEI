@@ -1,6 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 export default function ListasScreen({ navigation }: { navigation: any }) {
+  function criarLista() {
+            
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Listas</Text>

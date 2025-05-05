@@ -193,8 +193,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     scanFrame: {
-        width: 250,
-        height: 250,
+        width: 280,
+        height: 120,
         borderWidth: 2,
         borderColor: '#fff',
         borderRadius: 12,

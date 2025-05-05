@@ -1,8 +1,35 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ onLogin, navigation }: { onLogin: () => void, navigation: any }) {
+
+  const [input, setInput] = useState('');
+
+  const handleLogin = async() => {
+    try {
+      const dados = await AsyncStorage.getItem('users');
+      const users = dados ? JSON.parse(dados) : [];
+
+      const usuarioEncontrado = users.find((u: any) => u.email === input || u.user === input);
+      if (usuarioEncontrado) {
+        await AsyncStorage.setItem('loggedInUser', JSON.stringify(usuarioEncontrado));
+        Alert.alert(
+          'Login realizado com sucesso!',
+          `Bem-vindo${usuarioEncontrado.nome ? `, ${usuarioEncontrado.nome}` : ''}!`
+        );
+        onLogin();
+      }
+      else {
+        Alert.alert('Erro', 'Usuário não encontrado.');
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      Alert.alert('Erro', 'Não foi possível fazer login.');
+    }
+  }
+
   return (
     <LinearGradient
       colors={['#53A7D8', '#005f99']} 
@@ -19,10 +46,9 @@ export default function Login({ onLogin, navigation }: { onLogin: () => void, na
 
       <Text style={styles.titulo}>Bem-vindo</Text>
 
-      <TextInput placeholder='User' style={styles.inputs} placeholderTextColor='#bebebe' />
-      <TextInput placeholder='Senha' style={styles.inputs} placeholderTextColor='#bebebe' secureTextEntry />
+      <TextInput placeholder='E-mail ou usuário' style={styles.inputs} placeholderTextColor='#bebebe' onChangeText={setInput}/>
 
-      <TouchableOpacity style={styles.botao} onPress={onLogin}>
+      <TouchableOpacity style={styles.botao} onPress={handleLogin}>
         <Text style={styles.botaoTexto}>Login</Text>
       </TouchableOpacity>
 
