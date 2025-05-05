@@ -21,7 +21,7 @@ export default function Cadastro({ onSignup, navigation }: { onSignup: () => voi
       colors={['rgb(255, 255, 255)', 'rgb(200, 200, 200)']}
       style={styles.container}
     >
-      {/* Overlay for depth */}
+      {}
       <View style={styles.overlay}></View>
 
       <View style={styles.circuloCima} />

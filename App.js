@@ -5,6 +5,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './src/screens/Login';
 import Home from './src/screens/home';
 import Cadastro from './src/screens/Cadastro';
+import Perfil from './src/screens/Perfil';
+import Listas from './src/screens/Listas';
+import Scanner from './src/screens/Scanner';
 
 const AuthStack = createStackNavigator();
 const AppStack = createStackNavigator();
@@ -27,6 +30,9 @@ export default function App() {
       ) : (
         <AppStack.Navigator screenOptions={{ headerShown: false }}>
           <AppStack.Screen name="Home" component={Home} />
+          <AppStack.Screen name="Perfil" component={Perfil} />
+          <AppStack.Screen name="Listas" component={Listas} />
+          <AppStack.Screen name="Scanner" component={Scanner} />
         </AppStack.Navigator>
       )}
     </NavigationContainer>
