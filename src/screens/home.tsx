@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 export default function Home({ navigation }: { navigation: any }) {
   return (
@@ -7,20 +7,32 @@ export default function Home({ navigation }: { navigation: any }) {
 
       {}
       <View style={styles.bottomBar}>
-          <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Home')}>
-          <Text style={styles.tabText}>Home</Text>
+          <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('home')}>
+          <Image 
+            source={require('../../assets/house-chimney.png')}
+            resizeMode="contain"
+          />
           </TouchableOpacity>
 
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Listas')}>
-          <Text style={styles.tabText}>Listas</Text>
+        <Image 
+            source={require('../../assets/shopping-cart.png')}
+            resizeMode="contain"
+        />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Scanner')}>
-          <Text style={styles.tabText}>Scanner</Text>
+        <Image 
+            source={require('../../assets/camera-viewfinder.png')}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Perfil')}>
-          <Text style={styles.tabText}>Perfil</Text>
+        <Image 
+            source={require('../../assets/user.png')}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
       </View>
     </View>

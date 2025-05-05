@@ -29,7 +29,7 @@ export default function App() {
         </AuthStack.Navigator>
       ) : (
         <AppStack.Navigator screenOptions={{ headerShown: false }}>
-          <AppStack.Screen name="Home" component={Home} />
+          <AppStack.Screen name="home" component={Home} />
           <AppStack.Screen name="Perfil" component={Perfil} />
           <AppStack.Screen name="Listas" component={Listas} />
           <AppStack.Screen name="Scanner" component={Scanner} />
