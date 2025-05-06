@@ -1,11 +1,68 @@
-import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { primeiraLetraMaiuscula } from './Scanner';
 
-export default function Home({ navigation }: { navigation: any }) {
+export default function Home({ navigation, onLogout }: { navigation: any, onLogout: any}) {
+  const [user, setUser] = useState<any>(null);
+
+  const alertaLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Você realmente deseja sair?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Sair',
+          onPress: () => handleLogout(),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('loggedInUser');
+      onLogout();
+    }
+    catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
+  };
+  
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const loggedInUser = await AsyncStorage.getItem('loggedInUser');
+        if (loggedInUser) {
+          setUser(JSON.parse(loggedInUser));
+        }
+      } catch (error) {
+        console.error('Erro ao recuperar dados do user:', error);
+      }
+    };
+
+    fetchUser();
+  }
+  , []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home</Text>
+        <TouchableOpacity style={styles.botaoSair} onPress={() => alertaLogout()}>
+        <Image 
+            source={require('../../assets/exit.png')}
+            resizeMode="contain"
+        />
+        </TouchableOpacity>
 
-      {}
+      <Text style={styles.texto}>Bem-vindo, {primeiraLetraMaiuscula(user?.nome || '')}!</Text>
+
+
       <View style={styles.bottomBar}>
           <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('home')}>
           <Image 
@@ -46,11 +103,30 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     justifyContent: 'space-between',
   },
+  texto: {
+    fontSize: 20,
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    color: '#ffffff', 
+  },
   title: {
     fontSize: 28,
     alignSelf: 'center',
     fontWeight: 'bold',
     color: '#ffffff', 
+  },
+  botaoSair: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    backgroundColor: '#ffffff',
+    borderRadius: 50,
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
   },
   bottomBar: {
     flexDirection: 'row',

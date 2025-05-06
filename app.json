@@ -1,8 +1,7 @@
 {
   "expo": {
-    
     "name": "projeto",
-    "slug": "projeto",
+    "slug": "market-fei",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,18 +13,28 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.giovannimoreira01.marketfei",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.giovannimoreira01.marketfei"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-    ]
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "65a7e94b-0ebf-4b28-9c04-80e10ad3a04a"
+      }
+    },
+    "owner": "giovannimoreira01"
   }
 }

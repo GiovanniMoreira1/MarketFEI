@@ -2,6 +2,10 @@ import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { useState } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 
+export function primeiraLetraMaiuscula(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export default function ScannerScreen({ navigation }: { navigation: any }) {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
@@ -43,11 +47,7 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
     function toggleFlash() {
         setFlashOn(current => !current);
     }
-
-    function primeiraLetraMaiuscula(str: string) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
+    
     if (!permission) {
         return (
             <View style={styles.container}>
@@ -55,7 +55,7 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
             </View>
         );
     }
-
+    
     if (!permission.granted) {
         return (
             <View style={styles.container}>
@@ -64,19 +64,19 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
             </View>
         );
     }
-
+    
     function toggleCameraFacing() {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     }
-
+    
     const handleBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
         if (scanned) return;
-
+        
         setScanned(true);
         setBarcodeData(data);
         pegarInfoProduto(data);
     };
-
+    
     return (
         <View style={styles.container}>
             <CameraView
@@ -93,7 +93,7 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
                         'code128',
                     ],
                 }}
-            >
+                >
                 <View style={styles.overlay}>
                     <View style={styles.scanFrame} />
                 </View>
@@ -104,14 +104,14 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
                             source={require('../../assets/flashlight.png')}
                             resizeMode="contain"
                             style={styles.tabIcon}
-                        />
+                            />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.flipButton} onPress={toggleCameraFacing}>
                     <Image
                         source={require('../../assets/rotate-square.png')}
                         resizeMode="contain"
                         style={styles.tabIcon}
-                    />
+                        />
                     </TouchableOpacity>
                 </View>
             </CameraView>
@@ -143,7 +143,7 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
                         source={require('../../assets/house-chimney.png')}
                         resizeMode="contain"
                         style={styles.tabIcon}
-                    />
+                        />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Listas')}>
@@ -151,7 +151,7 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
                         source={require('../../assets/shopping-cart.png')}
                         resizeMode="contain"
                         style={styles.tabIcon}
-                    />
+                        />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.tabButton, styles.activeTab]} onPress={() => navigation.navigate('Scanner')}>
@@ -159,7 +159,7 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
                         source={require('../../assets/camera-viewfinder.png')}
                         resizeMode="contain"
                         style={styles.tabIcon}
-                    />
+                        />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Perfil')}>
@@ -167,7 +167,7 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
                         source={require('../../assets/user.png')}
                         resizeMode="contain"
                         style={styles.tabIcon}
-                    />
+                        />
                 </TouchableOpacity>
             </View>
         </View>

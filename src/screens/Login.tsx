@@ -3,10 +3,9 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Alert } fro
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Login({ onLogin, navigation }: { onLogin: () => void, navigation: any }) {
+export default function Login({ onLogin, navigation}: { onLogin: () => void, navigation: any}) {
 
   const [input, setInput] = useState('');
-
   const handleLogin = async() => {
     try {
       const dados = await AsyncStorage.getItem('users');

@@ -15,6 +15,7 @@ const AppStack = createStackNavigator();
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
 
   return (
     <NavigationContainer>
@@ -29,7 +30,9 @@ export default function App() {
         </AuthStack.Navigator>
       ) : (
         <AppStack.Navigator screenOptions={{ headerShown: false }}>
-          <AppStack.Screen name="home" component={Home} />
+          <AppStack.Screen name="home">
+            {(props) => <Home {...props} onLogout={() => setIsLoggedIn(false)} />}
+          </AppStack.Screen>
           <AppStack.Screen name="Perfil" component={Perfil} />
           <AppStack.Screen name="Listas" component={Listas} />
           <AppStack.Screen name="Scanner" component={Scanner} />
