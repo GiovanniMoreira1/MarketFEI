@@ -161,14 +161,6 @@ export default function ScannerScreen({ navigation }: { navigation: any }) {
                         style={styles.tabIcon}
                         />
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Perfil')}>
-                    <Image
-                        source={require('../../assets/user.png')}
-                        resizeMode="contain"
-                        style={styles.tabIcon}
-                        />
-                </TouchableOpacity>
             </View>
         </View>
     );

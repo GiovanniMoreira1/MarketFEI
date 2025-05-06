@@ -85,12 +85,6 @@ export default function Home({ navigation, onLogout }: { navigation: any, onLogo
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Perfil')}>
-        <Image 
-            source={require('../../assets/user.png')}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
       </View>
     </View>
   );

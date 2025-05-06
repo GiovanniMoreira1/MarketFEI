@@ -5,9 +5,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './src/screens/Login';
 import Home from './src/screens/home';
 import Cadastro from './src/screens/Cadastro';
-import Perfil from './src/screens/Perfil';
 import Listas from './src/screens/Listas';
 import Scanner from './src/screens/Scanner';
+import DetalhesLista from './src/screens/DetalhesLista';
 
 const AuthStack = createStackNavigator();
 const AppStack = createStackNavigator();
@@ -33,9 +33,9 @@ export default function App() {
           <AppStack.Screen name="home">
             {(props) => <Home {...props} onLogout={() => setIsLoggedIn(false)} />}
           </AppStack.Screen>
-          <AppStack.Screen name="Perfil" component={Perfil} />
           <AppStack.Screen name="Listas" component={Listas} />
           <AppStack.Screen name="Scanner" component={Scanner} />
+          <AppStack.Screen name="DetalhesLista" component={DetalhesLista} />
         </AppStack.Navigator>
       )}
     </NavigationContainer>
