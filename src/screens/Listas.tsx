@@ -1,10 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  FlatList,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { 
+  useFonts,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold 
+} from '@expo-google-fonts/poppins';
 
 export default function ListasScreen({ navigation }: { navigation: any }) {
   const [nomeLista, setNomeLista] = useState('');
   const [listas, setListas] = useState<any[]>([]);
+
+  // Carregando as fontes
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold
+  });
 
   useEffect(() => {
     carregarListas();
@@ -14,6 +35,8 @@ export default function ListasScreen({ navigation }: { navigation: any }) {
     try {
       const data = await AsyncStorage.getItem('listas');
       const listasSalvas = data ? JSON.parse(data) : [];
+      console.log(data)
+      console.log(listasSalvas)
       setListas(listasSalvas);
     } catch (error) {
       console.error('Erro ao carregar listas:', error);
@@ -42,7 +65,9 @@ export default function ListasScreen({ navigation }: { navigation: any }) {
   const renderItem = ({ item }: { item: any }) => (
     <View style={styles.listaItem}>
       <Text style={styles.listaNome}>{item.nome}</Text>
-      <TouchableOpacity style={styles.botaoVer} onPress={() => navigation.navigate('DetalhesLista', { lista: item })}>
+      <TouchableOpacity
+        style={styles.botaoVer}
+        onPress={() => navigation.navigate('DetalhesLista', { lista: item })}>
         <Text style={styles.textoVer}>Ver</Text>
       </TouchableOpacity>
     </View>
@@ -72,16 +97,31 @@ export default function ListasScreen({ navigation }: { navigation: any }) {
       />
 
       <View style={styles.bottomBar}>
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('home')}>
-          <Image source={require('../../assets/house-chimney.png')} resizeMode="contain" />
+        <TouchableOpacity
+          style={styles.tabButton}
+          onPress={() => navigation.navigate('home')}>
+          <Image
+            source={require('../../assets/house-chimney.png')}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Listas')}>
-          <Image source={require('../../assets/shopping-cart.png')} resizeMode="contain" />
+        <TouchableOpacity
+          style={styles.tabButton}
+          onPress={() => navigation.navigate('Listas')}>
+          <Image
+            source={require('../../assets/shopping-cart.png')}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.tabButton} onPress={() => navigation.navigate('Scanner')}>
-          <Image source={require('../../assets/camera-viewfinder.png')} resizeMode="contain" />
+        <TouchableOpacity
+          style={styles.tabButton}
+          onPress={() => navigation.navigate('Scanner')}>
+          <Image
+            source={require('../../assets/camera-viewfinder.png')}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -101,6 +141,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ffffff',
     marginBottom: 20,
+    fontFamily: 'Poppins_700Bold',
   },
   inputs: {
     backgroundColor: '#FDFEFF',
@@ -112,6 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#00000044',
+    fontFamily: 'Poppins_400Regular',
   },
   botaoCriar: {
     backgroundColor: '#ffffff',
@@ -127,6 +169,7 @@ const styles = StyleSheet.create({
     color: '#005f99',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'Poppins_700Bold',
   },
   listaItem: {
     backgroundColor: '#fff',
@@ -141,6 +184,7 @@ const styles = StyleSheet.create({
   listaNome: {
     fontSize: 16,
     color: '#005f99',
+    fontFamily: 'Poppins_400Regular',
   },
   botaoVer: {
     backgroundColor: '#005f99',
@@ -150,7 +194,7 @@ const styles = StyleSheet.create({
   },
   textoVer: {
     color: '#fff',
-    fontWeight: '600',
+    fontFamily: 'Poppins_600SemiBold',
   },
   bottomBar: {
     flexDirection: 'row',

@@ -1,72 +1,128 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { 
+  useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_700Bold
+} from '@expo-google-fonts/poppins';
 
-
-export default function Cadastro({ onSignup, navigation }: { onSignup: () => void, navigation: any }) {
-
+export default function Cadastro({
+  onSignup,
+  navigation,
+}: {
+  onSignup: () => void;
+  navigation: any;
+}) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [user, setUser] = useState('');
+  
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
+    Poppins_700Bold
+  });
 
-  const handleSignUp = async() => {
+  const handleSignUp = async () => {
     const userDados = {
-        nome,
-        email,
-        user,
-        createdAt: new Date().toISOString(),
+      nome,
+      email,
+      user,
+      createdAt: new Date().toISOString(),
     };
 
     try {
-        const userExistentes = await AsyncStorage.getItem('users');
-        let users = userExistentes ? JSON.parse(userExistentes) : [];
+      const userExistentes = await AsyncStorage.getItem('users');
+      let users = userExistentes ? JSON.parse(userExistentes) : [];
 
-        const userJaCadastrado = users.some(u=> u.email === email || u.user === user);
-        if (userJaCadastrado) {
-            Alert.alert('Erro', 'E-mail ou usuário já cadastrados.');
-            return;
-        }
+      const userJaCadastrado = users.some(
+        (u) => u.email === email || u.user === user
+      );
+      if (userJaCadastrado) {
+        Alert.alert('Erro', 'E-mail ou usuário já cadastrados.');
+        return;
+      }
 
-        users.push(userDados);
-        await AsyncStorage.setItem('users', JSON.stringify(users));
-        await AsyncStorage.setItem('loggedInUser', JSON.stringify(user));
+      users.push(userDados);
+      await AsyncStorage.setItem('users', JSON.stringify(users));
+      await AsyncStorage.setItem('loggedInUser', JSON.stringify(user));
 
-        navigation.navigate('Login');
-        Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
+      navigation.navigate('Login');
+      Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
     } catch (error) {
-        console.error('Erro ao cadastrar usuário:', error);
-        Alert.alert('Erro', 'Não foi possível cadastrar o usuário.');
+      console.error('Erro ao cadastrar usuário:', error);
+      Alert.alert('Erro', 'Não foi possível cadastrar o usuário.');
     }
+  };
+  
+  if (!fontsLoaded) {
+    return (
+      <View style={styles.container}>
+        <Text>Carregando fontes...</Text>
+      </View>
+    );
   }
 
   return (
     <LinearGradient
       colors={['rgb(255, 255, 255)', 'rgb(200, 200, 200)']}
-      style={styles.container}
-    >
+      style={styles.container}>
       {}
       <View style={styles.overlay}></View>
 
       <View style={styles.circuloCima} />
       <View style={styles.circuloBaixo} />
-    
-      <Image 
-          source={require('../../assets/logo_azul_nobg.png')}
-          style={styles.logo}
-          resizeMode="contain"
+
+      <Image
+        source={require('../../assets/logo_azul_nobg.png')}
+        style={styles.logo}
+        resizeMode="contain"
       />
 
-      <TextInput style={styles.inputs} placeholder='Nome' placeholderTextColor='#bebebe' onChangeText={setNome} ></TextInput>
-      <TextInput style={styles.inputs} placeholder='User' placeholderTextColor='#bebebe' onChangeText={setUser}></TextInput>
-      <TextInput style={styles.inputs} placeholder='E-mail' placeholderTextColor='#bebebe' onChangeText={setEmail}></TextInput>
-      
-      <TouchableOpacity style={styles.botao} onPress={() => { handleSignUp(); navigation.navigate('Login') }}>
-          <Text style={styles.botaoTexto}>Cadastre-se</Text>
+      <TextInput
+        style={styles.inputs}
+        placeholder="Nome"
+        placeholderTextColor="#bebebe"
+        onChangeText={setNome}></TextInput>
+      <TextInput
+        style={styles.inputs}
+        placeholder="User"
+        placeholderTextColor="#bebebe"
+        onChangeText={setUser}></TextInput>
+      <TextInput
+        style={styles.inputs}
+        placeholder="E-mail"
+        placeholderTextColor="#bebebe"
+        onChangeText={setEmail}></TextInput>
+
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={() => {
+          handleSignUp();
+          navigation.navigate('Login');
+        }}>
+        <Text style={styles.botaoTexto}>Cadastre-se</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.voltarTexto} onPress={() => { navigation.navigate('Login') }}>
-          <Text style={styles.voltarTexto}>Voltar para login</Text>
+      <TouchableOpacity
+        style={styles.voltarTexto}
+        onPress={() => {
+          navigation.navigate('Login');
+        }}>
+        <Text style={styles.voltarTexto}>Voltar para login</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
@@ -94,8 +150,8 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    justifyContent: 'center', 
-    alignItems: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   overlay: {
@@ -116,6 +172,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#00000044',
     borderWidth: 1,
+    fontFamily: 'Poppins_400Regular',
   },
 
   botao: {
@@ -133,19 +190,19 @@ const styles = StyleSheet.create({
   botaoTexto: {
     color: '#005f99',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins_600SemiBold',
   },
 
-  logo: { 
+  logo: {
     width: 250,
-    height: 100, 
-    marginBottom: 20 
+    height: 100,
+    marginBottom: 20,
   },
 
   voltarTexto: {
     color: '#005f99',
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins_500Medium',
     marginTop: 10,
     textDecorationLine: 'underline',
   },
