@@ -45,6 +45,7 @@
 ---
 
 Desenvolvido por **Giovanni Antonio Moreira** - RA: 22.223.010-4 <br>
-Projeto feito para matéria de Computação Móvel do 4º semestre de Ciência da Computação - FEI.
+Projeto feito para matéria de Computação Móvel do 4º semestre de Ciência da Computação - FEI. <br>
+Link para o Expo: https://snack.expo.dev/@giovannimoreira01/intelligent-indigo-donuts
 
 
